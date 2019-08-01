@@ -39,7 +39,7 @@ class ApiTypeTest extends FormIntegrationTestCase
     {
         $customDataMapper = new class extends DomainObjectsDataMapper {
             private $hasBeenCalled = false;
-            public function createObject(iterable $form, string $dataClass = null)
+            public function createObject(iterable $form, string $dataClass = null, array $additionalData = [])
             {
                 $this->hasBeenCalled = true;
                 return parent::createObject($form, $dataClass);

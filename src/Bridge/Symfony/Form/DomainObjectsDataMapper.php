@@ -20,7 +20,7 @@ class DomainObjectsDataMapper extends PropertyPathMapper implements DomainObject
     /**
      * {@inheritDoc}
      */
-    public function createObject(iterable $form, string $dataClass = null)
+    public function createObject(iterable $form, string $dataClass = null, array $additionalData = [])
     {
         if (null === $dataClass && $form instanceof FormInterface) {
             $dataClass = $form->getConfig()->getOption('data_class');
@@ -48,6 +48,8 @@ class DomainObjectsDataMapper extends PropertyPathMapper implements DomainObject
                 }
 
                 $data = $form[$parameter->getName()]->getData();
+            } else if (isset($additionalData[$parameter->getName()])) {
+                $data = $additionalData[$parameter->getName()];
             } else {
                 $data = null;
             }

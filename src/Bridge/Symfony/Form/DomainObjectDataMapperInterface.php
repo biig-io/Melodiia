@@ -9,8 +9,9 @@ interface DomainObjectDataMapperInterface extends DataMapperInterface
     /**
      * @param iterable    $form
      * @param string|null $dataClass
+     * @param mixed[]     $additionalData
      *
      * @return mixed
      */
-    public function createObject(iterable $form, string $dataClass = null);
+    public function createObject(iterable $form, string $dataClass = null, array $additionalData = []);
 }

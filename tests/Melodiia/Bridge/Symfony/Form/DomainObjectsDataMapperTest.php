@@ -34,6 +34,21 @@ class DomainObjectsDataMapperTest extends TestCase
 
         $obj = $mapper->createObject($form, FakeValueObject::class);
         $this->assertInstanceOf(FakeValueObject::class, $obj);
+        $this->assertEquals('bar', $obj->getFoo());
+    }
+
+    public function testItBuildObjectFromFormAndAdditionalData()
+    {
+        $mapper = new DomainObjectsDataMapper();
+
+        $dispatcher = $this->prophesize(EventDispatcherInterface::class)->reveal();
+        $form1 = new Form((new FormConfigBuilder('hello', null, $dispatcher))->setData('world')->getFormConfig());
+
+        $form = new \ArrayIterator(['hello' => $form1]);
+
+        $obj = $mapper->createObject($form, SecondFakeValueObject::class, ['item' => new FakeValueObject('foo', 'bar')]);
+        $this->assertInstanceOf(SecondFakeValueObject::class, $obj);
+        $this->assertInstanceOf(FakeValueObject::class, $obj->getItem());
     }
 }
 
@@ -42,16 +57,32 @@ class FakeValueObject
     private $hello;
     private $foo;
 
-    /**
-     * FakeValueObject constructor.
-     *
-     * @param $hello
-     * @param $foo
-     */
     public function __construct($hello, $foo)
     {
         $this->hello = $hello;
         $this->foo = $foo;
+    }
+
+    public function getHello()
+    {
+        return $this->hello;
+    }
+
+    public function getFoo()
+    {
+        return $this->foo;
+    }
+}
+
+class SecondFakeValueObject
+{
+    private $hello;
+    private $item;
+
+    public function __construct($hello, FakeValueObject $item)
+    {
+        $this->hello = $hello;
+        $this->item = $item;
     }
 
     /**
@@ -63,10 +94,10 @@ class FakeValueObject
     }
 
     /**
-     * @return mixed
+     * @return FakeValueObject
      */
-    public function getFoo()
+    public function getItem(): FakeValueObject
     {
-        return $this->foo;
+        return $this->item;
     }
 }
