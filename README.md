@@ -1,4 +1,3 @@
-# This repository is not maintained, it has been fork on https://github.com/swagindustries/Melodiia
 
 Melodiia
 ========
