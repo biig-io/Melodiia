@@ -4,6 +4,9 @@ Melodiia
 
 Finally some competitor to ApiPlatform.
 
+Important warning: biig-io/melodiia is no more maintained. You should checkout the fork at [SwagIndustries](https://github.com/swagindustries/Melodiia).
+You also may be interested by the [new documentation](https://melodiia.swag.industries/).
+
 Features
 --------
 
